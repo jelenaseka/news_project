@@ -24,6 +24,6 @@ public class User {
     private Role role;
     @Column(nullable = false)
     private boolean isDeleted;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<News> news;
 }
