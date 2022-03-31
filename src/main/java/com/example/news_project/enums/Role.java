@@ -1,4 +1,4 @@
-package com.example.news_project.model;
+package com.example.news_project.enums;
 
 public enum Role {
     PUBLIC, REPORTER, MODERATOR
