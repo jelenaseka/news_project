@@ -1,11 +1,12 @@
 package com.example.news_project.services;
 
+import com.example.news_project.entities.AbstractEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.UUID;
 
-public class GenericServiceImpl<ENTITY, REPO extends JpaRepository<ENTITY, UUID>> implements GenericService<ENTITY> {
+public class GenericServiceImpl<ENTITY extends AbstractEntity, REPO extends JpaRepository<ENTITY, UUID>> implements GenericService<ENTITY> {
 
     private REPO repository;
 
@@ -21,7 +22,9 @@ public class GenericServiceImpl<ENTITY, REPO extends JpaRepository<ENTITY, UUID>
 
     @Override
     public void delete(UUID id) {
-        repository.deleteById(id);
+        ENTITY entity = repository.findById(id).get();
+        entity.setDeleted(true);
+        repository.save(entity);
     }
 
     @Override
@@ -30,7 +33,7 @@ public class GenericServiceImpl<ENTITY, REPO extends JpaRepository<ENTITY, UUID>
     }
 
     @Override
-    public ENTITY findById(UUID id) {
+    public ENTITY findById(UUID id) { //da li treba da vratim optional<entity>
         return repository.findById(id).get();
     }
 }
