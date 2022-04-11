@@ -4,7 +4,7 @@ import com.example.news_project.entities.QTag;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import java.time.LocalDateTime;
 
-public class TagPredicate {
+public final class TagPredicate {
 
     private static final QTag QT = QTag.tag;
 

@@ -6,7 +6,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 
 import java.time.LocalDateTime;
 
-public class NewsPredicate {
+public final class NewsPredicate {
 
     private static final QNews QN = QNews.news;
 
