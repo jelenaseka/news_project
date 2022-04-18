@@ -1,11 +1,15 @@
 package com.example.news_project.services;
 
 import com.example.news_project.entities.AbstractEntity;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class GenericServiceImpl<ENTITY extends AbstractEntity, REPO extends JpaRepository<ENTITY, UUID>> implements GenericService<ENTITY> {
 
     private REPO repository;

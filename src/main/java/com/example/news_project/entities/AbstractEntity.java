@@ -20,15 +20,15 @@ public abstract class AbstractEntity {
     @Id
     @Column(columnDefinition = "varchar(36)")
     @Type(type = "uuid-char")
-    private UUID id;
+    protected UUID id;
 
     @Column(nullable = false)
-    private boolean isDeleted;
+    protected boolean isDeleted;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    protected LocalDateTime createdAt;
 
-    private LocalDateTime modifiedAt;
+    protected LocalDateTime modifiedAt;
 
     public AbstractEntity(UUID id, boolean isDeleted, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.id = id;
