@@ -1,32 +1,30 @@
 package com.example.news_project.tasks;
 
 import com.example.news_project.entities.News;
+import com.example.news_project.entities.SchedulerTaskEntity;
 import com.example.news_project.entities.User;
 import com.example.news_project.enums.NewsStatus;
+import com.example.news_project.enums.SchedulerTaskKey;
 import com.example.news_project.repositories.NewsRepository;
 import com.example.news_project.repositories.UserRepository;
 import com.example.news_project.utils.Generator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Random;
 import java.util.UUID;
 
-public class NewsCreateTask {
-    Logger logger = LoggerFactory.getLogger(NewsArchiveTask.class);
+public class NewsCreateTask extends AbstractTask {
     @Autowired
     private NewsRepository newsRepository;
     @Autowired
     private UserRepository userRepository;
 
+    @Override
     @Scheduled(cron = "${scheduler.news.create}")
     @Transactional
-    public void createNews() {
+    protected void execute() {
         logger.info("Create news task called");
 
         try {
@@ -39,6 +37,8 @@ public class NewsCreateTask {
             }
         } catch (Exception e) {
             logger.error("Something went wrong");
+        } finally {
+            saveSchedulerTask(new SchedulerTaskEntity(SchedulerTaskKey.NEWS_CREATE, LocalDateTime.now()));
         }
 
         logger.info("Create news task done");
