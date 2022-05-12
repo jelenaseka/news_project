@@ -38,6 +38,6 @@ public class GenericServiceImpl<ENTITY extends AbstractEntity, REPO extends JpaR
 
     @Override
     public ENTITY findById(UUID id) { //da li treba da vratim optional<entity>
-        return repository.findById(id).get();
+        return repository.findById(id).get(); //PITAJ ovde throw exception if not exist?
     }
 }

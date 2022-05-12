@@ -1,10 +1,7 @@
 package com.example.news_project.entities;
 
 import com.example.news_project.enums.NewsStatus;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +9,7 @@ import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -34,12 +32,13 @@ public class News extends AbstractEntity {
 
     private boolean isArchived;
 
-    public News(UUID id, boolean isDeleted, LocalDateTime createdAt, LocalDateTime modifiedAt, String heading, String content, NewsStatus status, User createdBy, boolean isArchived) {
+    public News(UUID id, boolean isDeleted, LocalDateTime createdAt, LocalDateTime modifiedAt, String heading, String content, NewsStatus status, User createdBy, User modifiedBy, boolean isArchived) {
         super(id, isDeleted, createdAt, modifiedAt);
         this.heading = heading;
         this.content = content;
         this.status = status;
         this.createdBy = createdBy;
+        this.modifiedBy = modifiedBy;
         this.isArchived = isArchived;
     }
 
