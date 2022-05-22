@@ -2,11 +2,14 @@ package com.example.news_project.config;
 
 import com.example.news_project.enums.NewsEvent;
 import com.example.news_project.enums.NewsStatus;
+import com.example.news_project.exceptions.NewsStateTransitionException;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.support.StaticListableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.Message;
 import org.springframework.statemachine.StateContext;
+import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.action.Action;
 import org.springframework.statemachine.config.EnableStateMachine;
 import org.springframework.statemachine.config.EnableStateMachineFactory;
@@ -34,6 +37,17 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<NewsSt
             @Override
             public void stateChanged(State<NewsStatus, NewsEvent> from, State<NewsStatus, NewsEvent> to) {
                 log.info(String.format("State changed(from: %s, to: %s", from + "", to + ""));
+            }
+
+            @Override
+            public void eventNotAccepted(Message<NewsEvent> event) {
+                log.info("Event not accepted");
+                throw new NewsStateTransitionException("State cannot be changed to " + event.getPayload().name());
+            }
+
+            @Override
+            public void stateMachineError(StateMachine<NewsStatus, NewsEvent> stateMachine, Exception exception) {
+
             }
         };
         config
@@ -68,25 +82,17 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<NewsSt
                 .withExternal()
                     .source(NewsStatus.SUBMITTED).target(NewsStatus.READY)
                     .event(NewsEvent.SET_READY)
-                    .action(action2(), errorAction())
+                    .action(fromSubmitterToReadyAction(), fromSubmitterToReadyErrorAction())
                 .and().withExternal()
                     .source(NewsStatus.READY).target(NewsStatus.ACCEPTED)
                     .event(NewsEvent.ACCEPT)
-                    .action(action2())
                 .and().withExternal()
                     .source(NewsStatus.READY).target(NewsStatus.DENIED)
-                    .event(NewsEvent.DENY)
-                    .action(action2());
-//                .and().withExternal()
-//                    .source(NewsStatus.ACCEPTED).target(NewsStatus.DENIED)
-//                    .event(NewsEvent.DENY)
-//                .and().withExternal()
-//                    .source(NewsStatus.DENIED).target(NewsStatus.ACCEPTED)
-//                    .event(NewsEvent.ACCEPT);
+                    .event(NewsEvent.DENY);
     }
 
     @Bean
-    public Action<NewsStatus, NewsEvent> action2() {
+    public Action<NewsStatus, NewsEvent> fromSubmitterToReadyAction() {
         return new Action<NewsStatus, NewsEvent>() {
 
             @Override
@@ -97,12 +103,11 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<NewsSt
     }
 
     @Bean
-    public Action<NewsStatus, NewsEvent> errorAction() {
+    public Action<NewsStatus, NewsEvent> fromSubmitterToReadyErrorAction() {
         return new Action<NewsStatus, NewsEvent>() {
 
             @Override
             public void execute(StateContext<NewsStatus, NewsEvent> context) {
-                // RuntimeException("MyError") added to context
                 Exception exception = context.getException();
                 exception.getMessage();
             }

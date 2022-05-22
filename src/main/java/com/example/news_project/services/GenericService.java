@@ -1,6 +1,7 @@
 package com.example.news_project.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface GenericService<ENTITY> {
@@ -9,5 +10,5 @@ public interface GenericService<ENTITY> {
     void update(ENTITY e);
     void delete(UUID id);
     List<ENTITY> findAll();
-    ENTITY findById(UUID id);
+    Optional<ENTITY> findById(UUID id);
 }

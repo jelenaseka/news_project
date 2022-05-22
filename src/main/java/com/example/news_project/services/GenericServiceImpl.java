@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -37,7 +38,7 @@ public class GenericServiceImpl<ENTITY extends AbstractEntity, REPO extends JpaR
     }
 
     @Override
-    public ENTITY findById(UUID id) { //da li treba da vratim optional<entity>
-        return repository.findById(id).get(); //PITAJ ovde throw exception if not exist?
+    public Optional<ENTITY> findById(UUID id) {
+        return repository.findById(id);
     }
 }

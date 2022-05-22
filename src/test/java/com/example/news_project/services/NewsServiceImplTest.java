@@ -3,6 +3,7 @@ package com.example.news_project.services;
 import com.example.news_project.entities.News;
 import com.example.news_project.enums.NewsEvent;
 import com.example.news_project.enums.NewsStatus;
+import com.example.news_project.exceptions.NewsStateTransitionException;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ class NewsServiceImplTest {
     private StateMachineFactory factory;
 
     @Test
-    void test() {
+    void stateTransition_Test() {
         News news = newsService.create(
                 new News(UUID.randomUUID(),
                         false,
@@ -43,5 +44,19 @@ class NewsServiceImplTest {
         Assertions.assertEquals(NewsStatus.ACCEPTED, sm.getState().getId());
     }
 
+    @Test
+    void stateTransition_ExceptionThrown() {
+        News news = newsService.create(
+                new News(UUID.randomUUID(),
+                        false,
+                        LocalDateTime.now(),
+                        null,
+                        "What parents should know about the increase in unexplained hepatitis cases in children",
+                        "The US Centers for Disease Control and Prevention is investigassue a health aaccordingly.",
+                        NewsStatus.SUBMITTED, null, null, false));
+//        StateMachine<NewsStatus, NewsEvent> sm = newsService.accept(news.getId());
+//        log.info("State after accept: " + sm.getState().getId().name());
+        Assertions.assertThrows(NewsStateTransitionException.class, () -> newsService.accept(news.getId()));
+    }
 
 }
