@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
+@Where(clause = "is_deleted=false")
 public class User extends AbstractEntity {
 
     @Column(nullable = false, unique = true)
