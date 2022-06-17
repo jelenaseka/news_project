@@ -1,8 +1,8 @@
 package com.example.news_project.services;
 
 import com.example.news_project.entities.User;
-import com.example.news_project.repositories.NewsRepository;
 import com.example.news_project.repositories.UserRepository;
+import com.example.news_project.services.interfaces.UserService;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

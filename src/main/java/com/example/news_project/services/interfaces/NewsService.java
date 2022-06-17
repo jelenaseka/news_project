@@ -1,10 +1,9 @@
-package com.example.news_project.services;
+package com.example.news_project.services.interfaces;
 
 import com.example.news_project.entities.News;
 import com.example.news_project.enums.NewsEvent;
 import com.example.news_project.enums.NewsStatus;
 import org.springframework.statemachine.StateMachine;
-import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 

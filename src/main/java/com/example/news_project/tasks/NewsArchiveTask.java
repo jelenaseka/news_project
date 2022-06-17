@@ -20,6 +20,7 @@ public class NewsArchiveTask extends AbstractTask {
     private String cron;
 
     @Override
+    //TODO sredi ove taskove
 //    @Transactional
 //    @Scheduled(cron = "${scheduler.news.archive}")
     protected void process() {

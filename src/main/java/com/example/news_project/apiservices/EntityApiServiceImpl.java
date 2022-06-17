@@ -1,8 +1,9 @@
 package com.example.news_project.apiservices;
 
+import com.example.news_project.apiservices.interfaces.EntityAPIService;
 import com.example.news_project.exceptions.domain.NoContentException;
 import com.example.news_project.mappers.Mapper;
-import com.example.news_project.services.GenericService;
+import com.example.news_project.services.interfaces.GenericService;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;

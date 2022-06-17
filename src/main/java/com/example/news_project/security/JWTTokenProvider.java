@@ -31,6 +31,7 @@ public class JWTTokenProvider {
     public String generateJwtToken(UserDetails userDetails) {
         String[] claims = getClaimsFromUser(userDetails);
         return JWT.create().withIssuedAt(new Date())
+                .withIssuer("issuer")
                 .withSubject(userDetails.getUsername())
                 .withArrayClaim(SecurityConstant.AUTHORITIES, claims)
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstant.EXPIRATION_TIME))

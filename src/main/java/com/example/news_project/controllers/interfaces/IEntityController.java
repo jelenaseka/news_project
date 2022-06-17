@@ -1,4 +1,4 @@
-package com.example.news_project.controllers;
+package com.example.news_project.controllers.interfaces;
 
 import com.example.news_project.model.NewsRequest;
 import com.example.news_project.model.NewsResponse;

@@ -1,16 +1,14 @@
 package com.example.news_project.apiservices;
 
+import com.example.news_project.apiservices.interfaces.NewsAPIService;
 import com.example.news_project.entities.News;
 import com.example.news_project.mappers.Mapper;
 import com.example.news_project.model.NewsRequest;
 import com.example.news_project.model.NewsResponse;
-import com.example.news_project.predicates.NewsPredicate;
-import com.example.news_project.services.NewsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.news_project.services.interfaces.NewsService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.function.Predicate;
 
 @Service
 public class NewsAPIServiceImpl extends EntityApiServiceImpl<News, NewsRequest, NewsResponse, NewsService> implements NewsAPIService {

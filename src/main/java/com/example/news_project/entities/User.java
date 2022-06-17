@@ -31,19 +31,15 @@ public class User extends AbstractEntity {
     private String fullName;
     private boolean isNotLocked;
     private boolean isActive;
+    private Role role;
 
-    private Role role; //role has a list of auths
-//    @ElementCollection(targetClass=Authority.class)
-//    @Enumerated(EnumType.STRING) // Possibly optional (I'm not sure) but defaults to ORDINAL.
-//    @CollectionTable(name="user_authorities")
-//    @Column(name="authority") // Column name in person_interest
-//    private List<Authority> authorities;
-
-    public User(UUID id, boolean isDeleted, LocalDateTime createdAt, LocalDateTime modifiedAt, String username, String password, String fullName, Role role) {
+    public User(UUID id, boolean isDeleted, LocalDateTime createdAt, LocalDateTime modifiedAt, String username, String password, String fullName, boolean isNotLocked, boolean isActive, Role role) {
         super(id, isDeleted, createdAt, modifiedAt);
         this.username = username;
         this.password = password;
         this.fullName = fullName;
+        this.isNotLocked = isNotLocked;
+        this.isActive = isActive;
         this.role = role;
 //        this.authorities = authorities;
     }

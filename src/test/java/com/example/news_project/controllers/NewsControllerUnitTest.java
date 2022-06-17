@@ -1,14 +1,11 @@
 package com.example.news_project.controllers;
 
 import com.example.news_project.entities.News;
-import com.example.news_project.enums.NewsStatus;
 import com.example.news_project.mappers.NewsMapper;
 import com.example.news_project.model.NewsFilterParams;
 import com.example.news_project.model.NewsRequest;
-import com.example.news_project.services.NewsService;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.example.news_project.services.interfaces.NewsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.querydsl.core.types.Predicate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,15 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc

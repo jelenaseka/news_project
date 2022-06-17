@@ -1,4 +1,4 @@
-package com.example.news_project.apiservices;
+package com.example.news_project.apiservices.interfaces;
 
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Pageable;

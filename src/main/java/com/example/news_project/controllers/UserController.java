@@ -1,10 +1,8 @@
 package com.example.news_project.controllers;
 
-import com.example.news_project.apiservices.NewsAPIService;
-import com.example.news_project.apiservices.UserAPIService;
+import com.example.news_project.apiservices.interfaces.UserAPIService;
+import com.example.news_project.controllers.interfaces.IUserController;
 import com.example.news_project.model.*;
-import com.example.news_project.services.UserService;
-import com.example.news_project.validators.NewsRequestValidator;
 import com.example.news_project.validators.RegisterUserValidator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +17,8 @@ public class UserController implements IUserController {
     private UserAPIService userAPIService;
     @Inject
     private RegisterUserValidator registerUserValidator;
+//    @Inject
+//    private UserRequestValidator userRequestValidator;
 
     @Override
     public UserResponse register(RegisterUserRequest registerUserRequest) {
@@ -36,9 +36,11 @@ public class UserController implements IUserController {
         return null;
     }
 
+    //TODO set isActive
     @Override
     public UserResponse create(UserRequest userRequest) {
-        return null;
+//        userRequestValidator.validate(userRequest);
+        return userAPIService.create(userRequest);
     }
 
     @Override

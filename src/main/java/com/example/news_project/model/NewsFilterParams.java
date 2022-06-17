@@ -23,7 +23,7 @@ public class NewsFilterParams {
     private String modifiedByUsername;
     private Boolean isArchived;
     private Boolean isDeleted;
-    private String orderBy;
+    private String orderBy; //pitaj za string il enum il nes drugo
     private SortOrder sortOrder;
     private int page;
 }

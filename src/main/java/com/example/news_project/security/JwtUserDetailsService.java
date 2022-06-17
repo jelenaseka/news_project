@@ -3,27 +3,24 @@ package com.example.news_project.security;
 import com.example.news_project.entities.User;
 import com.example.news_project.model.UserPrincipal;
 import com.example.news_project.repositories.UserRepository;
-import com.example.news_project.services.LoginAttemptService;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import com.example.news_project.services.LoginAttemptServiceImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 //TODO add logs
+//TODO add email
 //pitaj jel ovo ok da bude i userService koji sam vec napravila il da bude odvojeno
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
     @Inject
     private UserRepository userRepository;
     @Inject
-    private LoginAttemptService loginAttemptService;
+    private LoginAttemptServiceImpl loginAttemptService;
 
     public UserDetails findByUsername(String username) {
         User user = userRepository.findByUsername(username).get();

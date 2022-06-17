@@ -4,6 +4,8 @@ import com.example.news_project.entities.News;
 import com.example.news_project.enums.NewsEvent;
 import com.example.news_project.enums.NewsStatus;
 import com.example.news_project.repositories.NewsRepository;
+import com.example.news_project.services.interfaces.NewsService;
+import com.example.news_project.services.interfaces.NewsStateHandler;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Pageable;

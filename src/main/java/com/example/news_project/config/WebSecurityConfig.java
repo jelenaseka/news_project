@@ -58,7 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers(SecurityConstant.PUBLIC_URLS).permitAll()
+                .authorizeRequests()
+                .antMatchers(SecurityConstant.PUBLIC_URLS).permitAll()
+                .antMatchers(SecurityConstant.SWAGGER_URLS).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().accessDeniedHandler(jwtAccessDeniedHandler)

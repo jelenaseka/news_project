@@ -1,8 +1,9 @@
 package com.example.news_project.controllers;
 
-import com.example.news_project.apiservices.NewsAPIService;
-import com.example.news_project.exceptions.domain.ExceptionHandling;
-import com.example.news_project.predicates.NewsPageableCreator;
+import com.example.news_project.apiservices.interfaces.NewsAPIService;
+import com.example.news_project.controllers.interfaces.INewsController;
+import com.example.news_project.exceptions.domain.ExceptionControllerAdvice;
+import com.example.news_project.order_specifiers.NewsPageableCreator;
 import com.example.news_project.predicates.NewsPredicateListCreator;
 import com.example.news_project.model.NewsFilterParams;
 import com.example.news_project.model.NewsRequest;
@@ -26,7 +27,7 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/api/news")
-public class NewsController extends ExceptionHandling implements INewsController {
+public class NewsController extends ExceptionControllerAdvice implements INewsController {
     @Inject
     private NewsAPIService newsAPIService;
     @Inject

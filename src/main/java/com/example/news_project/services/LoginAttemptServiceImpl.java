@@ -1,16 +1,16 @@
 package com.example.news_project.services;
 
+import com.example.news_project.services.interfaces.LoginAttemptService;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class LoginAttemptService {
+public class LoginAttemptServiceImpl implements LoginAttemptService {
     public static final int MAX_NUMBER_OF_ATTEMPT = 3; //vidi mozda u app prop da stavis
     public static final int ATTEMPT_INCREMENT = 1;
     private LoadingCache<String, Integer> loginAttemptCache;
@@ -22,7 +22,7 @@ public class LoginAttemptService {
      * Defining max size of the cache - supports 100 entries.
      *
      */
-    public LoginAttemptService() {
+    public LoginAttemptServiceImpl() {
         loginAttemptCache = CacheBuilder.newBuilder()
                 .expireAfterWrite(15, TimeUnit.MINUTES)
                 .maximumSize(100)

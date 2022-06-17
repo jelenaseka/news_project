@@ -25,8 +25,10 @@ public class UserMapper implements IUserMapper {
                 LocalDateTime.now(),
                 null,
                 userRequest.getUsername(),
-                userRequest.getPassword(),
+                passwordEncoder.encode(userRequest.getPassword()), //pitaj
                 userRequest.getFullName(),
+                true,
+                true,
                 userRequest.getRole()
         );
     }
@@ -53,6 +55,8 @@ public class UserMapper implements IUserMapper {
                 registerUserRequest.getUsername(),
                 passwordEncoder.encode(registerUserRequest.getPassword()), //pitaj
                 registerUserRequest.getFullName(),
+                true,
+                true,
                 Role.ROLE_REPORTER
         );
     }

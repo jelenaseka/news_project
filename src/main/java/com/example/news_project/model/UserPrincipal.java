@@ -1,13 +1,14 @@
 package com.example.news_project.model;
 
 import com.example.news_project.entities.User;
+import com.example.news_project.enums.Authority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class UserPrincipal implements UserDetails {
     private User user;
@@ -18,7 +19,12 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(this.user.getRole().getAuthorities()).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        Authority[] authorities = this.user.getRole().getAuthorities();
+        List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
+        for (Authority authority : authorities) {
+            grantedAuthorityList.add(new SimpleGrantedAuthority(authority.toString()));
+        }
+        return grantedAuthorityList;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.example.news_project.entities.News;
 import com.example.news_project.enums.NewsEvent;
 import com.example.news_project.enums.NewsStatus;
 import com.example.news_project.exceptions.domain.NewsStateTransitionException;
+import com.example.news_project.services.interfaces.NewsService;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

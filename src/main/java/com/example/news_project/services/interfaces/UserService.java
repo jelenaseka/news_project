@@ -1,4 +1,4 @@
-package com.example.news_project.services;
+package com.example.news_project.services.interfaces;
 
 import com.example.news_project.entities.User;
 

@@ -1,14 +1,13 @@
 package com.example.news_project.services;
 
 import com.example.news_project.entities.AbstractEntity;
+import com.example.news_project.services.interfaces.GenericService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 @AllArgsConstructor
 @NoArgsConstructor

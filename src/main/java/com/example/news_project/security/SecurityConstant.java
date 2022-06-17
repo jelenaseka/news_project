@@ -1,5 +1,7 @@
 package com.example.news_project.security;
 
+//add pkg constant
+//pitaj da li ovde il u app.prop
 public class SecurityConstant {
     public static final long EXPIRATION_TIME = 432000000;
     public static final String TOKEN_PREFIX = "Bearer ";
@@ -11,12 +13,13 @@ public class SecurityConstant {
     public static final String OPTIONS_HTTP_METHOD = "OPTIONS";
     public static final String[] PUBLIC_URLS = {
             "/api/auth/login",
-            "/api/auth/register",
+            "/api/auth/register"
+    };
+    public static final String[] SWAGGER_URLS = { //TODO test
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/swagger-ui.html",
             "/v2/api-docs",
-            "/webjars/**",
-            "**"
+            "/webjars/**"
     };
 }

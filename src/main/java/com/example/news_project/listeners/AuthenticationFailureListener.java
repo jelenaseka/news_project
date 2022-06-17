@@ -1,18 +1,16 @@
 package com.example.news_project.listeners;
 
-import com.example.news_project.services.LoginAttemptService;
+import com.example.news_project.services.LoginAttemptServiceImpl;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import java.util.concurrent.ExecutionException;
 
 @Component
 public class AuthenticationFailureListener {
     @Inject
-    private LoginAttemptService loginAttemptService;
+    private LoginAttemptServiceImpl loginAttemptService;
 
     @EventListener
     public void onAuthenticationFailure(AuthenticationFailureBadCredentialsEvent event) {

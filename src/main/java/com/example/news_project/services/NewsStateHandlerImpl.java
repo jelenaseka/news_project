@@ -5,6 +5,7 @@ import com.example.news_project.enums.NewsEvent;
 import com.example.news_project.enums.NewsStatus;
 import com.example.news_project.exceptions.domain.NoContentException;
 import com.example.news_project.repositories.NewsRepository;
+import com.example.news_project.services.interfaces.NewsStateHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;

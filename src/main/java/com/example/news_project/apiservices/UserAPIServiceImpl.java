@@ -1,18 +1,16 @@
 package com.example.news_project.apiservices;
 
+import com.example.news_project.apiservices.interfaces.UserAPIService;
 import com.example.news_project.entities.User;
 import com.example.news_project.mappers.IUserMapper;
 import com.example.news_project.mappers.Mapper;
 import com.example.news_project.model.RegisterUserRequest;
 import com.example.news_project.model.UserRequest;
 import com.example.news_project.model.UserResponse;
-import com.example.news_project.services.UserService;
-import com.example.news_project.validators.UserValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.news_project.services.interfaces.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.UUID;
 
 
 @Service

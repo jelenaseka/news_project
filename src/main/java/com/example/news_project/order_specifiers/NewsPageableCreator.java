@@ -1,4 +1,4 @@
-package com.example.news_project.predicates;
+package com.example.news_project.order_specifiers;
 
 import com.example.news_project.enums.SortOrder;
 import com.example.news_project.order_specifiers.NewsOrderSpecifier;
@@ -18,7 +18,7 @@ public class NewsPageableCreator {
     @Value("${page.size.news}")
     private int pageSize;
 
-    //TODO pitaj jel se salje i page size
+    //pitaj jel se salje i page size
 
     /**
      * Returns pageable object, given the orderBy value, sort order and page number

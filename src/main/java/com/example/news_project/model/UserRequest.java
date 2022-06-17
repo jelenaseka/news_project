@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserRequest {
     private String username;
-    private String password;
+    private String password; //TODO change to send pwd to email
     private String fullName;
     private Role role;
 }
