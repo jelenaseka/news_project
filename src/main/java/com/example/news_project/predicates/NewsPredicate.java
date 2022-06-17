@@ -16,6 +16,18 @@ public final class NewsPredicate {
         return QN.createdAt.between(from, to);
     }
 
+    public static BooleanExpression matchesNotDeleted() {
+        return QN.isDeleted.eq(false);
+    }
+
+    public static BooleanExpression matchesDeleted(boolean deleted) {
+        return QN.isDeleted.eq(deleted);
+    }
+
+    public static  BooleanExpression matchesArchived(boolean archived) {
+        return QN.isArchived.eq(archived);
+    }
+
     public static BooleanExpression matchesCreatedBefore(LocalDateTime date) {
         return QN.createdAt.before(date);
     }
@@ -46,6 +58,14 @@ public final class NewsPredicate {
 
     public static BooleanExpression matchesCreatedBy(User createdBy) {
         return QN.createdBy.id.eq(createdBy.getId());
+    }
+
+    public static BooleanExpression matchesCreatedByUsername(String username) {
+        return QN.createdBy.username.eq(username);
+    }
+
+    public static BooleanExpression matchesModifiedByUsername(String username) {
+        return QN.modifiedBy.username.eq(username);
     }
 
     public static BooleanExpression matchesModifiedBy(User modifiedBy) {

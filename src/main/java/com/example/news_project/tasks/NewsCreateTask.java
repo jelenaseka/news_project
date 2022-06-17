@@ -16,13 +16,14 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class NewsCreateTask extends AbstractTask {
-    @Autowired
+    @Inject
     private NewsRepository newsRepository;
-    @Autowired
+    @Inject
     private UserRepository userRepository;
 
     @Override

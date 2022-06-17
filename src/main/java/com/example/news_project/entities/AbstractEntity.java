@@ -12,6 +12,9 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Abstract class for defining entity's primary fields
+ */
 @MappedSuperclass
 @NoArgsConstructor
 @Getter

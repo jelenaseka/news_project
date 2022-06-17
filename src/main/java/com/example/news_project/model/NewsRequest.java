@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Getter
@@ -14,6 +19,6 @@ import java.util.UUID;
 public class NewsRequest {
     private String heading;
     private String content;
-    private NewsStatus status;
+    //TODO ovo nece trebati
     private UUID createdBy;
 }

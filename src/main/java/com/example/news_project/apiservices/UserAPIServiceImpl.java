@@ -1,21 +1,27 @@
 package com.example.news_project.apiservices;
 
 import com.example.news_project.entities.User;
+import com.example.news_project.mappers.IUserMapper;
 import com.example.news_project.mappers.Mapper;
+import com.example.news_project.model.RegisterUserRequest;
 import com.example.news_project.model.UserRequest;
 import com.example.news_project.model.UserResponse;
 import com.example.news_project.services.UserService;
+import com.example.news_project.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
+import java.util.UUID;
 
 
 @Service
 public class UserAPIServiceImpl extends EntityApiServiceImpl<User, UserRequest, UserResponse, UserService> implements UserAPIService {
 
-    @Autowired
+    @Inject
     private UserService userService;
-    @Autowired
-    private Mapper<User, UserRequest, UserResponse> userMapper;
+    @Inject
+    private IUserMapper userMapper;
 
     public UserAPIServiceImpl(UserService userService, Mapper<User, UserRequest, UserResponse> userMapper) {
         super(userService, userMapper);
@@ -29,14 +35,14 @@ public class UserAPIServiceImpl extends EntityApiServiceImpl<User, UserRequest, 
     }
 
     @Override
-    protected void validation(User user) {
-    //check if username exists
+    protected String getEntityName() {
+        return User.ENTITY_NAME;
     }
 
     @Override
-    protected String getEntityName() {
-        return "User";
+    public UserResponse register(RegisterUserRequest registerUserRequest) {
+        User user = userMapper.convertRegisterUserRequestToUser(registerUserRequest);
+        user = userService.create(user);
+        return userMapper.convertEntityToEntityResponse(user);
     }
-
-
 }

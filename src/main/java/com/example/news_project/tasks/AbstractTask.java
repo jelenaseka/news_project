@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 
 public abstract class AbstractTask {
     Logger logger = LoggerFactory.getLogger(NewsArchiveTask.class);
 
-    @Autowired
+    @Inject
     private SchedulerTaskRepository schedulerTaskRepository;
 
     protected void saveSchedulerTask(SchedulerTaskEntity e) {

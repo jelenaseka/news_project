@@ -12,6 +12,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+/**
+ * Entity that represents executed task
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

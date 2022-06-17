@@ -3,7 +3,7 @@ package com.example.news_project.services;
 import com.example.news_project.entities.News;
 import com.example.news_project.enums.NewsEvent;
 import com.example.news_project.enums.NewsStatus;
-import com.example.news_project.exceptions.NotFoundException;
+import com.example.news_project.exceptions.domain.NoContentException;
 import com.example.news_project.repositories.NewsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
@@ -29,7 +29,7 @@ public class NewsStateChangeInterceptor extends StateMachineInterceptorAdapter<N
             if(id != null) {
                 Optional<News> newsMaybe = newsRepository.findById(id);
                 if(newsMaybe.isEmpty()) {
-                    throw new NotFoundException("News with the id + " + id + " is not found in the database.");
+                    throw new NoContentException("News with the id + " + id + " is not found in the database.");
                 }
                 News news = newsMaybe.get();
                 news.setStatus(state.getId());

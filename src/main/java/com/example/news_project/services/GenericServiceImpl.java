@@ -8,10 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class GenericServiceImpl<ENTITY extends AbstractEntity, REPO extends JpaRepository<ENTITY, UUID>> implements GenericService<ENTITY> {
+public abstract class GenericServiceImpl<ENTITY extends AbstractEntity, REPO extends JpaRepository<ENTITY, UUID>> implements GenericService<ENTITY> {
 
     private REPO repository;
 
@@ -30,11 +31,6 @@ public class GenericServiceImpl<ENTITY extends AbstractEntity, REPO extends JpaR
         ENTITY entity = repository.findById(id).get();
         entity.setDeleted(true);
         repository.save(entity);
-    }
-
-    @Override
-    public List<ENTITY> findAll() {
-        return repository.findAll();
     }
 
     @Override

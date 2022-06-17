@@ -3,7 +3,7 @@ package com.example.news_project.services;
 import com.example.news_project.entities.News;
 import com.example.news_project.enums.NewsEvent;
 import com.example.news_project.enums.NewsStatus;
-import com.example.news_project.exceptions.NewsStateTransitionException;
+import com.example.news_project.exceptions.domain.NewsStateTransitionException;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,6 @@ import org.springframework.statemachine.config.StateMachineFactory;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Log
 @SpringBootTest

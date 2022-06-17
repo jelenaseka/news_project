@@ -3,27 +3,23 @@ package com.example.news_project.services;
 import com.example.news_project.entities.News;
 import com.example.news_project.enums.NewsEvent;
 import com.example.news_project.enums.NewsStatus;
-import com.example.news_project.exceptions.NotFoundException;
 import com.example.news_project.repositories.NewsRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
+import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Predicate;
+import org.springframework.data.domain.Pageable;
 import org.springframework.statemachine.StateMachine;
-import org.springframework.statemachine.state.State;
-import org.springframework.statemachine.support.DefaultStateMachineContext;
-import org.springframework.statemachine.support.StateMachineInterceptorAdapter;
-import org.springframework.statemachine.transition.Transition;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
-import java.util.Optional;
+import javax.inject.Inject;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class NewsServiceImpl extends GenericServiceImpl<News, NewsRepository> implements NewsService {
-    @Autowired
+    @Inject
     private NewsStateHandler newsStateHandler;
+    @Inject
+    private NewsRepository newsRepository;
 
     public NewsServiceImpl(NewsRepository newsRepository) {
         super(newsRepository);
@@ -43,5 +39,15 @@ public class NewsServiceImpl extends GenericServiceImpl<News, NewsRepository> im
         return newsStateHandler.sendEvent(newsId, NewsEvent.DENY);
     }
 
+    @Override
+    public Iterable<News> findAllByPredicatePageable(List<Predicate> p, Pageable pageable) {
+        if(p.size() > 0) {
+            return newsRepository.findAll(ExpressionUtils.allOf(p), pageable);
+        } else {
+            return newsRepository.findAll(pageable);
+        }
+    }
+
+    //java dokumentacija
 
 }
