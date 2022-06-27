@@ -2,13 +2,18 @@ package com.example.news_project.apiservices;
 
 import com.example.news_project.apiservices.interfaces.NewsAPIService;
 import com.example.news_project.entities.News;
+import com.example.news_project.entities.User;
+import com.example.news_project.exceptions.domain.NoContentException;
 import com.example.news_project.mappers.Mapper;
 import com.example.news_project.model.NewsRequest;
 import com.example.news_project.model.NewsResponse;
+import com.example.news_project.security.JwtUserDetailsService;
 import com.example.news_project.services.interfaces.NewsService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class NewsAPIServiceImpl extends EntityApiServiceImpl<News, NewsRequest, NewsResponse, NewsService> implements NewsAPIService {
@@ -17,6 +22,8 @@ public class NewsAPIServiceImpl extends EntityApiServiceImpl<News, NewsRequest, 
     private NewsService newsService;
     @Inject
     private Mapper<News, NewsRequest, NewsResponse> newsMapper;
+    @Inject
+    private JwtUserDetailsService jwtUserDetailsService;
 
     public NewsAPIServiceImpl(NewsService newsService, Mapper<News, NewsRequest, NewsResponse> newsMapper) {
         super(newsService, newsMapper);
@@ -47,4 +54,36 @@ public class NewsAPIServiceImpl extends EntityApiServiceImpl<News, NewsRequest, 
         return News.ENTITY_NAME;
     }
 
+    @Override
+    public NewsResponse create(NewsRequest newsRequest) {
+        News news = newsMapper.convertEntityRequestToEntity(newsRequest);
+        User user = jwtUserDetailsService.getLoggedInUser();
+        news.setCreatedBy(user);
+        news = newsService.create(news);
+        return newsMapper.convertEntityToEntityResponse(news);
+    }
+
+    @Override
+    public void update(UUID id, NewsRequest newsRequest) {
+        //pitaj za ovo
+        User user = jwtUserDetailsService.getLoggedInUser();
+        Optional<News> newsMaybe = newsService.findByIdAndCreatedBy(id, user);
+        if(newsMaybe.isEmpty()) {
+            throw new NoContentException(getEntityName() + " with the id " + id + " is not found in the database.");
+        }
+
+        News news = newsMaybe.get();
+        news = setFields(news, newsRequest);
+        newsService.update(news);
+    }
+
+    @Override
+    public void delete(UUID id) {
+        User user = jwtUserDetailsService.getLoggedInUser();
+        Optional<News> newsMaybe = newsService.findByIdAndCreatedBy(id, user);
+        if(newsMaybe.isEmpty()) {
+            throw new NoContentException(getEntityName() + " with the id " + id + " is not found in the database.");
+        }
+        newsService.delete(id);
+    }
 }

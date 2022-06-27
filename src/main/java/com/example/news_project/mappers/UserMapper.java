@@ -1,15 +1,16 @@
 package com.example.news_project.mappers;
 
 import com.example.news_project.entities.User;
-import com.example.news_project.enums.Role;
 import com.example.news_project.model.RegisterUserRequest;
 import com.example.news_project.model.UserRequest;
 import com.example.news_project.model.UserResponse;
+import com.example.news_project.security.SecurityConstant;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -29,7 +30,7 @@ public class UserMapper implements IUserMapper {
                 userRequest.getFullName(),
                 true,
                 true,
-                userRequest.getRole()
+                userRequest.getAuthorities()
         );
     }
 
@@ -41,7 +42,7 @@ public class UserMapper implements IUserMapper {
                 user.getModifiedAt(),
                 user.getUsername(),
                 user.getFullName(),
-                user.getRole()
+                user.getAuthorities()
         );
     }
 
@@ -57,7 +58,7 @@ public class UserMapper implements IUserMapper {
                 registerUserRequest.getFullName(),
                 true,
                 true,
-                Role.ROLE_REPORTER
+                List.of(SecurityConstant.REGISTERED_USER_AUTHORITIES)
         );
     }
 }

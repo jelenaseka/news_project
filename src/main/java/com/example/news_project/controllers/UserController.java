@@ -4,6 +4,7 @@ import com.example.news_project.apiservices.interfaces.UserAPIService;
 import com.example.news_project.controllers.interfaces.IUserController;
 import com.example.news_project.model.*;
 import com.example.news_project.validators.RegisterUserValidator;
+import com.example.news_project.validators.UserRequestValidator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,8 +18,8 @@ public class UserController implements IUserController {
     private UserAPIService userAPIService;
     @Inject
     private RegisterUserValidator registerUserValidator;
-//    @Inject
-//    private UserRequestValidator userRequestValidator;
+    @Inject
+    private UserRequestValidator userRequestValidator;
 
     @Override
     public UserResponse register(RegisterUserRequest registerUserRequest) {
@@ -33,23 +34,24 @@ public class UserController implements IUserController {
 
     @Override
     public UserResponse findById(UUID id) {
-        return null;
+        return userAPIService.findById(id);
     }
 
     //TODO set isActive
     @Override
     public UserResponse create(UserRequest userRequest) {
-//        userRequestValidator.validate(userRequest);
+        userRequestValidator.validate(userRequest);
         return userAPIService.create(userRequest);
     }
 
     @Override
     public void update(UserRequest userRequest, UUID id) {
-
+        userRequestValidator.validate(userRequest);
+        userAPIService.update(id, userRequest);
     }
 
     @Override
     public void delete(UUID id) {
-
+        userAPIService.delete(id);
     }
 }

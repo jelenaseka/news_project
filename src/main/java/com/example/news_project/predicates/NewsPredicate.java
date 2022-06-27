@@ -5,12 +5,17 @@ import com.example.news_project.enums.NewsStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public final class NewsPredicate {
 
     private static final QNews QN = QNews.news;
 
     private NewsPredicate() {}
+
+    public static BooleanExpression matchesId(UUID id) {
+        return QN.id.eq(id);
+    }
 
     public static BooleanExpression matchesCreatedAtBetween(LocalDateTime from, LocalDateTime to) {
         return QN.createdAt.between(from, to);

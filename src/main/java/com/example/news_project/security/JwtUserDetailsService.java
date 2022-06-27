@@ -4,6 +4,9 @@ import com.example.news_project.entities.User;
 import com.example.news_project.model.UserPrincipal;
 import com.example.news_project.repositories.UserRepository;
 import com.example.news_project.services.LoginAttemptServiceImpl;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,7 +17,6 @@ import java.util.Optional;
 
 //TODO add logs
 //TODO add email
-//pitaj jel ovo ok da bude i userService koji sam vec napravila il da bude odvojeno
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
     @Inject
@@ -48,5 +50,14 @@ public class JwtUserDetailsService implements UserDetailsService {
         } else {
             loginAttemptService.evictUserFromLoginAttemptCache(user.getUsername());
         }
+    }
+
+    public User getLoggedInUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = authentication.getName();
+            return userRepository.findByUsername(currentUserName).get();
+        }
+        return null;
     }
 }

@@ -12,7 +12,7 @@ public interface GenericService<ENTITY> {
     ENTITY create(ENTITY e);
     void update(ENTITY e);
     void delete(UUID id);
-    Optional<ENTITY> findById(UUID id);
+    Optional<ENTITY> findByIdAndNotDeleted(UUID id);
 
     /**
      * Given list of predicates and pageable object, filters all entities

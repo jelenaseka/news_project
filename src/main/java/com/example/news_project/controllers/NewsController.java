@@ -2,16 +2,22 @@ package com.example.news_project.controllers;
 
 import com.example.news_project.apiservices.interfaces.NewsAPIService;
 import com.example.news_project.controllers.interfaces.INewsController;
+import com.example.news_project.entities.User;
 import com.example.news_project.exceptions.domain.ExceptionControllerAdvice;
 import com.example.news_project.order_specifiers.NewsPageableCreator;
 import com.example.news_project.predicates.NewsPredicateListCreator;
 import com.example.news_project.model.NewsFilterParams;
 import com.example.news_project.model.NewsRequest;
 import com.example.news_project.model.NewsResponse;
+import com.example.news_project.security.JwtUserDetailsService;
+import com.example.news_project.services.interfaces.UserService;
 import com.example.news_project.validators.NewsFilterParamsValidator;
 import com.example.news_project.validators.NewsRequestValidator;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -25,6 +31,7 @@ import java.util.UUID;
  * </p>
  *
  */
+//TODO add logger everywhere
 @RestController
 @RequestMapping("/api/news")
 public class NewsController extends ExceptionControllerAdvice implements INewsController {
@@ -38,6 +45,7 @@ public class NewsController extends ExceptionControllerAdvice implements INewsCo
     private NewsFilterParamsValidator newsFilterParamsValidator;
     @Inject
     private NewsPageableCreator newsPageableCreator;
+
 
     /**
      * Returns collection of NewsResponse objects based on filterParams

@@ -35,7 +35,6 @@ public class AuthenticationController implements IAuthenticationController {
         final String token = jwtTokenProvider.generateJwtToken(userDetails);
         HttpHeaders jwtHeader = new HttpHeaders();
         jwtHeader.add(SecurityConstant.JWT_TOKEN_HEADER, token);
-        //ili samo da vratim token u bodyju
         return new ResponseEntity<>(userDetails, jwtHeader, HttpStatus.OK);
     }
 

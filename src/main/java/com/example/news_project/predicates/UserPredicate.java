@@ -1,15 +1,20 @@
 package com.example.news_project.predicates;
 
 import com.example.news_project.entities.QUser;
-import com.example.news_project.enums.Role;
+import com.example.news_project.enums.Authority;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public final class UserPredicate {
 
     private static final QUser QU = QUser.user;
 
     private UserPredicate() {}
+
+    public static BooleanExpression matchesId(UUID id) {
+        return QU.id.eq(id);
+    }
 
     public static BooleanExpression matchesCreatedAtBetween(LocalDateTime from, LocalDateTime to) {
         return QU.createdAt.between(from, to);
@@ -47,7 +52,11 @@ public final class UserPredicate {
         return QU.fullName.containsIgnoreCase(fullName);
     }
 
-    public static BooleanExpression matchesRole(Role role) {
-        return QU.role.eq(role);
+    public static BooleanExpression matchesAuthority(Authority authority) {
+        return QU.authorities.contains(authority);
+    }
+
+    public static BooleanExpression matchesNotDeleted() {
+        return QU.isDeleted.eq(false);
     }
 }

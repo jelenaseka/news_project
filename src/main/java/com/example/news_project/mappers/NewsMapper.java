@@ -18,17 +18,10 @@ import java.util.UUID;
 @Component
 public class NewsMapper implements Mapper<News, NewsRequest, NewsResponse> {
     @Inject
-    private UserRepository userRepository;
-    @Inject
     private UserMapper userMapper;
 
     @Override
     public News convertEntityRequestToEntity(NewsRequest newsRequest) {
-        Optional<User> userMaybe = userRepository.findById(newsRequest.getCreatedBy());
-        // pitaj da li se ovde mora proveravati posto vec jeste u validaciji
-        if(userMaybe.isEmpty()) {
-            throw new NoContentException("User with the id " + newsRequest.getCreatedBy() + " does not exist.");
-        }
         return new News(
                 UUID.randomUUID(),
                 false,
@@ -37,7 +30,7 @@ public class NewsMapper implements Mapper<News, NewsRequest, NewsResponse> {
                 newsRequest.getHeading(),
                 newsRequest.getContent(),
                 NewsStatus.SUBMITTED,
-                userMaybe.get(),
+                null,
                 null,
                 false
         );

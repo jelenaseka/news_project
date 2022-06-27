@@ -1,5 +1,6 @@
 package com.example.news_project.model;
 
+import com.example.news_project.entities.User;
 import com.example.news_project.enums.NewsStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,4 @@ import java.util.UUID;
 public class NewsRequest {
     private String heading;
     private String content;
-    //TODO ovo nece trebati
-    private UUID createdBy;
 }

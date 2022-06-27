@@ -45,7 +45,7 @@ class NewsControllerUnitTest {
     public void createOne_ValidNewsRequest() throws Exception {
         News news = new News();
         when(newsService.create(news)).thenReturn(news);
-        NewsRequest newsRequest = new NewsRequest("heading","content", UUID.randomUUID());
+        NewsRequest newsRequest = new NewsRequest("heading","content");
         mockMvc.perform(
                 post("/api/news")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -66,7 +66,7 @@ class NewsControllerUnitTest {
 
     @Test
     public void createOne_InvalidNewsRequest_EmptyFields() throws Exception {
-        NewsRequest newsRequest = new NewsRequest("a","a",null);
+        NewsRequest newsRequest = new NewsRequest("a","a");
         mockMvc.perform(
                 post("/api/news")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -89,7 +89,7 @@ class NewsControllerUnitTest {
 
     @Test
     public void createOne_InvalidNewsRequest_BlankFields() throws Exception {
-        NewsRequest newsRequest = new NewsRequest("    ","    ", UUID.randomUUID());
+        NewsRequest newsRequest = new NewsRequest("    ","    ");
         mockMvc.perform(
                 post("/api/news")
                         .contentType(MediaType.APPLICATION_JSON)

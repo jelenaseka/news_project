@@ -1,7 +1,11 @@
 package com.example.news_project.services;
 
 import com.example.news_project.entities.AbstractEntity;
+import com.example.news_project.entities.News;
+import com.example.news_project.repositories.GenericRepository;
 import com.example.news_project.services.interfaces.GenericService;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.EntityPathBase;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,9 +15,10 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class GenericServiceImpl<ENTITY extends AbstractEntity, REPO extends JpaRepository<ENTITY, UUID>> implements GenericService<ENTITY> {
+public abstract class GenericServiceImpl<ENTITY extends AbstractEntity, REPO extends GenericRepository<ENTITY, UUID>> implements GenericService<ENTITY> {
 
     private REPO repository;
+    protected abstract Predicate getEntityPredicateNotDeleted(UUID id);
 
     @Override
     public ENTITY create(ENTITY e) {
@@ -33,7 +38,7 @@ public abstract class GenericServiceImpl<ENTITY extends AbstractEntity, REPO ext
     }
 
     @Override
-    public Optional<ENTITY> findById(UUID id) {
-        return repository.findById(id);
+    public Optional<ENTITY> findByIdAndNotDeleted(UUID id) {
+        return repository.findOne(getEntityPredicateNotDeleted(id));
     }
 }

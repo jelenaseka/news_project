@@ -88,7 +88,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(NoResultException.class)
     public ResponseEntity<HttpResponse> notFoundException(NoResultException e) {
         LOGGER.error(e.getMessage()); //pitaj
-        return createHttpResponse(HttpStatus.NOT_FOUND, e.getMessage());
+        return createHttpResponse(HttpStatus.NO_CONTENT, e.getMessage());
     }
 
     private ResponseEntity<HttpResponse> createHttpResponse(HttpStatus httpStatus, String message) {

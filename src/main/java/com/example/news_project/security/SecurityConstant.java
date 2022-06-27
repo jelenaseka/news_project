@@ -1,7 +1,8 @@
 package com.example.news_project.security;
 
+import com.example.news_project.enums.Authority;
+
 //add pkg constant
-//pitaj da li ovde il u app.prop
 public class SecurityConstant {
     public static final long EXPIRATION_TIME = 432000000;
     public static final String TOKEN_PREFIX = "Bearer ";
@@ -21,5 +22,10 @@ public class SecurityConstant {
             "/swagger-ui.html",
             "/v2/api-docs",
             "/webjars/**"
+    };
+    public static final Authority[] REGISTERED_USER_AUTHORITIES = {
+            Authority.NEWS_READ,
+            Authority.NEWS_CREATE,
+            Authority.NEWS_UPDATE
     };
 }

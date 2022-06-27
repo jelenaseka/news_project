@@ -81,7 +81,6 @@ public class JWTTokenProvider {
         return verifier;
     }
 
-    //TODO change userdetails to user principal (add class) and override getAuthorities meth
     private String[] getClaimsFromUser(UserDetails userDetails) {
         List<String> authorities = new ArrayList<>();
         for(GrantedAuthority grantedAuthority: userDetails.getAuthorities()) {

@@ -1,7 +1,6 @@
 package com.example.news_project.validators;
 
 import com.example.news_project.entities.User;
-import com.example.news_project.enums.Role;
 import com.example.news_project.exceptions.domain.ValidationException;
 import com.example.news_project.model.Errors;
 import com.example.news_project.model.NewsRequest;
@@ -34,11 +33,6 @@ public class NewsRequestValidator implements EntityRequestValidator<NewsRequest>
 
         if (checkInputString(newsRequest.getHeading())) {
             errors.rejectValue("heading", newsRequest.getHeading(),"Empty field");
-        }
-
-        Optional<User> userMaybe = userRepository.findById(newsRequest.getCreatedBy());
-        if(userMaybe.isEmpty()) {
-            errors.rejectValue("createdBy", newsRequest.getCreatedBy(), "User with the id " + newsRequest.getCreatedBy() + " does not exist");
         }
 
         //TODO prebaci ove iste stvari u apstrakciju

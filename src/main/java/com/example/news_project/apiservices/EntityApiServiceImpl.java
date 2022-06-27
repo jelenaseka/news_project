@@ -38,18 +38,18 @@ public abstract class EntityApiServiceImpl<ENTITY, ENTITY_REQUEST, ENTITY_RESPON
 
     @Override
     public void update(UUID id, ENTITY_REQUEST entity_request) {
-        Optional<ENTITY> entityMaybe = service.findById(id);
+        Optional<ENTITY> entityMaybe = service.findByIdAndNotDeleted(id);
         if(entityMaybe.isEmpty()) {
             throw new NoContentException(getEntityName() + " with the id " + id + " is not found in the database.");
         }
-        ENTITY entity = mapper.convertEntityRequestToEntity(entity_request);
+        ENTITY entity = entityMaybe.get();
         entity = setFields(entity, entity_request);
         service.update(entity);
     }
 
     @Override
     public void delete(UUID id) {
-        Optional<ENTITY> entityMaybe = service.findById(id);
+        Optional<ENTITY> entityMaybe = service.findByIdAndNotDeleted(id);
         if(entityMaybe.isEmpty()) {
             throw new NoContentException(getEntityName() + " with the id " + id + " is not found in the database.");
         }
@@ -58,7 +58,7 @@ public abstract class EntityApiServiceImpl<ENTITY, ENTITY_REQUEST, ENTITY_RESPON
 
     @Override
     public ENTITY_RESPONSE findById(UUID id) {
-        Optional<ENTITY> entityMaybe = service.findById(id);
+        Optional<ENTITY> entityMaybe = service.findByIdAndNotDeleted(id);
         return entityMaybe.map(entity ->
             {return mapper.convertEntityToEntityResponse(entity);}
             ).orElseThrow(() -> new NoContentException(getEntityName() + " with the id " + id + " is not found in the database."));

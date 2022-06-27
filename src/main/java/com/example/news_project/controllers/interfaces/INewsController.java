@@ -10,6 +10,14 @@ import java.util.UUID;
 public interface INewsController extends IEntityController<NewsRequest, NewsResponse, NewsFilterParams> {
 
     @Override
+    @PreAuthorize("hasAnyAuthority('NEWS_READ')")
+    Iterable<NewsResponse> findAll(NewsFilterParams newsFilterParams);
+
+    @Override
+    @PreAuthorize("hasAnyAuthority('NEWS_READ')")
+    NewsResponse findById(UUID id);
+
+    @Override
     @PreAuthorize("hasAnyAuthority('NEWS_CREATE')")
     NewsResponse create(NewsRequest newsRequest);
 

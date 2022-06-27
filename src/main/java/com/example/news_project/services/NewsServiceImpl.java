@@ -1,8 +1,10 @@
 package com.example.news_project.services;
 
 import com.example.news_project.entities.News;
+import com.example.news_project.entities.User;
 import com.example.news_project.enums.NewsEvent;
 import com.example.news_project.enums.NewsStatus;
+import com.example.news_project.predicates.NewsPredicate;
 import com.example.news_project.repositories.NewsRepository;
 import com.example.news_project.services.interfaces.NewsService;
 import com.example.news_project.services.interfaces.NewsStateHandler;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -42,6 +45,11 @@ public class NewsServiceImpl extends GenericServiceImpl<News, NewsRepository> im
     }
 
     @Override
+    public Optional<News> findByIdAndCreatedBy(UUID id, User createdBy) {
+        return newsRepository.findByIdAndCreatedBy(id, createdBy);
+    }
+
+    @Override
     public Iterable<News> findAllByPredicatePageable(List<Predicate> p, Pageable pageable) {
         if(p.size() > 0) {
             return newsRepository.findAll(ExpressionUtils.allOf(p), pageable);
@@ -50,6 +58,8 @@ public class NewsServiceImpl extends GenericServiceImpl<News, NewsRepository> im
         }
     }
 
-    //java dokumentacija
-
+    @Override
+    protected Predicate getEntityPredicateNotDeleted(UUID id) {
+        return NewsPredicate.matchesNotDeleted().and(NewsPredicate.matchesId(id));
+    }
 }
