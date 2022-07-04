@@ -78,11 +78,11 @@ public class ExceptionControllerAdvice {
         return createHttpResponse(HttpStatus.METHOD_NOT_ALLOWED, String.format(METHOD_NOT_ALLOWED, supportedMethod));
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<HttpResponse> internalServerErrorException(RuntimeException e) {
-        LOGGER.error(e.getMessage());
-        return createHttpResponse(HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_SERVER_ERROR_MSG);
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public ResponseEntity<HttpResponse> internalServerErrorException(RuntimeException e) {
+//        LOGGER.error(e.getMessage());
+//        return createHttpResponse(HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_SERVER_ERROR_MSG);
+//    }
 
     //TODO comes from hibernate - test this
     @ExceptionHandler(NoResultException.class)

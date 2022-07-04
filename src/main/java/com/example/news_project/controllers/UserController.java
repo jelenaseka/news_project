@@ -3,12 +3,20 @@ package com.example.news_project.controllers;
 import com.example.news_project.apiservices.interfaces.UserAPIService;
 import com.example.news_project.controllers.interfaces.IUserController;
 import com.example.news_project.model.*;
+import com.example.news_project.order_specifiers.NewsPageableCreator;
+import com.example.news_project.order_specifiers.UserPageableCreator;
+import com.example.news_project.predicates.NewsPredicateListCreator;
+import com.example.news_project.predicates.UserPredicateListCreator;
 import com.example.news_project.validators.RegisterUserValidator;
+import com.example.news_project.validators.UserFilterParamsValidator;
 import com.example.news_project.validators.UserRequestValidator;
+import com.querydsl.core.types.Predicate;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,6 +28,12 @@ public class UserController implements IUserController {
     private RegisterUserValidator registerUserValidator;
     @Inject
     private UserRequestValidator userRequestValidator;
+    @Inject
+    private UserFilterParamsValidator userFilterParamsValidator;
+    @Inject
+    private UserPageableCreator userPageableCreator;
+    @Inject
+    private UserPredicateListCreator userPredicateListCreator;
 
     @Override
     public UserResponse register(RegisterUserRequest registerUserRequest) {
@@ -29,7 +43,10 @@ public class UserController implements IUserController {
 
     @Override
     public Iterable<UserResponse> findAll(UserFilterParams userFilterParams) {
-        return null;
+        userFilterParamsValidator.validate(userFilterParams);
+        List<Predicate> predicates = userPredicateListCreator.createPredicates(userFilterParams);
+        Pageable pageable = userPageableCreator.createPageable(userFilterParams.getOrderBy(), userFilterParams.getSortOrder(), userFilterParams.getPage());
+        return userAPIService.findAllByPredicatePageable(predicates, pageable);
     }
 
     @Override

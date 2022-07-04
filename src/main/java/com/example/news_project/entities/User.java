@@ -30,7 +30,7 @@ public class User extends AbstractEntity {
     private boolean isNotLocked;
     private boolean isActive;
 
-    @ElementCollection(targetClass = Authority.class)
+    @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_authorities")
     @Column(name = "authority")

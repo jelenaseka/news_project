@@ -58,6 +58,7 @@ public class NewsServiceImpl extends GenericServiceImpl<News, NewsRepository> im
         }
     }
 
+    //todo pogledaj za newsTag
     @Override
     protected Predicate getEntityPredicateNotDeleted(UUID id) {
         return NewsPredicate.matchesNotDeleted().and(NewsPredicate.matchesId(id));

@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NewsFilterParams {
+public class NewsFilterParams extends AbstractFilterParams {
     private String createdBefore;
     private String createdAfter;
     private String modifiedBefore;
@@ -22,8 +22,5 @@ public class NewsFilterParams {
     private String createdByUsername;
     private String modifiedByUsername;
     private Boolean isArchived;
-    private Boolean isDeleted;
-    private String orderBy; //pitaj za string il enum il nes drugo
-    private SortOrder sortOrder;
-    private int page;
+
 }
