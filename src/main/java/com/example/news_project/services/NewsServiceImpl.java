@@ -45,8 +45,8 @@ public class NewsServiceImpl extends GenericServiceImpl<News, NewsRepository> im
     }
 
     @Override
-    public Optional<News> findByIdAndCreatedBy(UUID id, User createdBy) {
-        return newsRepository.findByIdAndCreatedBy(id, createdBy);
+    public Optional<News> findById(UUID id) {
+        return newsRepository.findById(id);
     }
 
     @Override
@@ -61,6 +61,6 @@ public class NewsServiceImpl extends GenericServiceImpl<News, NewsRepository> im
     //todo pogledaj za newsTag
     @Override
     protected Predicate getEntityPredicateNotDeleted(UUID id) {
-        return NewsPredicate.matchesNotDeleted().and(NewsPredicate.matchesId(id));
+        return NewsPredicate.matchesDeleted(false).and(NewsPredicate.matchesId(id));
     }
 }

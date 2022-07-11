@@ -20,5 +20,4 @@ public interface NewsRepository extends GenericRepository<News, UUID> {
     @Query("update News set isArchived = true where createdAt < :time")
     void archiveNewsCreatedAtBefore(LocalDateTime time);
 
-    Optional<News> findByIdAndCreatedBy(UUID uuid, User createdBy);
 }

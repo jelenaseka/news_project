@@ -21,9 +21,6 @@ public final class NewsPredicate {
         return QN.createdAt.between(from, to);
     }
 
-    public static BooleanExpression matchesNotDeleted() {
-        return QN.isDeleted.eq(false);
-    }
 
     public static BooleanExpression matchesDeleted(boolean deleted) {
         return QN.isDeleted.eq(deleted);

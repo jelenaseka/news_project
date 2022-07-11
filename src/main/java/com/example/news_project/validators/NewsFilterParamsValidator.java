@@ -9,7 +9,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 @Component
-public class NewsFilterParamsValidator {
+public class NewsFilterParamsValidator extends GenericValidatorImpl<NewsFilterParams> {
+
+    @Override
+    protected String getObjectName() {
+        return "newsFilterParams";
+    }
 
     /**
      * Checks if newsFilterParams fields has corresponding values
@@ -19,9 +24,8 @@ public class NewsFilterParamsValidator {
      * orderBy field must correspond one of all possible values - "heading","createdAt","modifiedAt"
      * @param newsFilterParams
      */
-    public void validate(NewsFilterParams newsFilterParams) {
-        Errors errors = new Errors("newsFilterParams");
-
+    @Override
+    protected Errors validateFields(Errors errors, NewsFilterParams newsFilterParams) {
         if (checkInputString(newsFilterParams.getCreatedAfter())) {
             errors.rejectValue("createdAfter", newsFilterParams.getCreatedAfter(), "Empty field");
         }
@@ -66,7 +70,7 @@ public class NewsFilterParamsValidator {
         }
 
         if(newsFilterParams.getCreatedBefore() != null && newsFilterParams.getCreatedAfter() != null
-        && errors.getFieldError("createdBefore") == null && errors.getFieldError("createdAfter") == null) {
+                && errors.getFieldError("createdBefore") == null && errors.getFieldError("createdAfter") == null) {
             if(!isDateRangeValid(newsFilterParams.getCreatedBefore(), newsFilterParams.getCreatedAfter())) {
                 errors.rejectValue("createdBefore", newsFilterParams.getCreatedBefore(),"Invalid date range");
             }
@@ -78,10 +82,7 @@ public class NewsFilterParamsValidator {
                 errors.rejectValue("modifiedBefore", newsFilterParams.getModifiedBefore(),"Invalid date range");
             }
         }
-
-        if(errors.getErrorCount() > 0) {
-            throw new ValidationException(errors);
-        }
+        return errors;
     }
 
     private boolean isDateRangeValid(String createdBefore, String createdAfter) {

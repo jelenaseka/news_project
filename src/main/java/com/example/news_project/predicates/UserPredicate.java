@@ -56,7 +56,15 @@ public final class UserPredicate {
         return QU.authorities.contains(authority);
     }
 
-    public static BooleanExpression matchesNotDeleted() {
-        return QU.isDeleted.eq(false);
+    public static BooleanExpression matchesDeleted(boolean deleted) {
+        return QU.isDeleted.eq(deleted);
+    }
+
+    public static BooleanExpression matchesNotLocked(boolean notLocked) {
+        return QU.isNotLocked.eq(notLocked);
+    }
+
+    public static BooleanExpression matchesActive(boolean active) {
+        return QU.isActive.eq(active);
     }
 }

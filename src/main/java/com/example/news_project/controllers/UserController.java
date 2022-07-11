@@ -7,6 +7,7 @@ import com.example.news_project.order_specifiers.NewsPageableCreator;
 import com.example.news_project.order_specifiers.UserPageableCreator;
 import com.example.news_project.predicates.NewsPredicateListCreator;
 import com.example.news_project.predicates.UserPredicateListCreator;
+import com.example.news_project.validators.GenericValidator;
 import com.example.news_project.validators.RegisterUserValidator;
 import com.example.news_project.validators.UserFilterParamsValidator;
 import com.example.news_project.validators.UserRequestValidator;
@@ -25,9 +26,9 @@ public class UserController implements IUserController {
     @Inject
     private UserAPIService userAPIService;
     @Inject
-    private RegisterUserValidator registerUserValidator;
+    private GenericValidator<RegisterUserRequest> registerUserValidator;
     @Inject
-    private UserRequestValidator userRequestValidator;
+    private GenericValidator<UserRequest> userRequestValidator;
     @Inject
     private UserFilterParamsValidator userFilterParamsValidator;
     @Inject
@@ -54,7 +55,6 @@ public class UserController implements IUserController {
         return userAPIService.findById(id);
     }
 
-    //TODO set isActive
     @Override
     public UserResponse create(UserRequest userRequest) {
         userRequestValidator.validate(userRequest);

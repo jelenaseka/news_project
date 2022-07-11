@@ -4,6 +4,7 @@ import com.example.news_project.entities.User;
 import com.example.news_project.predicates.UserPredicate;
 import com.example.news_project.repositories.UserRepository;
 import com.example.news_project.services.interfaces.UserService;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,12 @@ public class UserServiceImpl extends GenericServiceImpl<User, UserRepository> im
     }
 
     @Override
-    public List<User> findAllByPredicatePageable(List<Predicate> p, Pageable pageable) {
-        return null;
+    public Iterable<User> findAllByPredicatePageable(List<Predicate> p, Pageable pageable) {
+        if(p.size() > 0) {
+            return userRepository.findAll(ExpressionUtils.allOf(p), pageable);
+        } else {
+            return userRepository.findAll(pageable);
+        }
     }
 
     @Override
@@ -34,6 +39,6 @@ public class UserServiceImpl extends GenericServiceImpl<User, UserRepository> im
 
     @Override
     protected Predicate getEntityPredicateNotDeleted(UUID id) {
-        return UserPredicate.matchesNotDeleted().and(UserPredicate.matchesId(id));
+        return UserPredicate.matchesDeleted(false).and(UserPredicate.matchesId(id));
     }
 }

@@ -3,6 +3,7 @@ package com.example.news_project.apiservices;
 import com.example.news_project.apiservices.interfaces.NewsAPIService;
 import com.example.news_project.entities.News;
 import com.example.news_project.entities.User;
+import com.example.news_project.exceptions.domain.ForbiddenException;
 import com.example.news_project.exceptions.domain.NoContentException;
 import com.example.news_project.mappers.Mapper;
 import com.example.news_project.model.NewsRequest;
@@ -65,14 +66,15 @@ public class NewsAPIServiceImpl extends EntityApiServiceImpl<News, NewsRequest, 
 
     @Override
     public void update(UUID id, NewsRequest newsRequest) {
-        //pitaj za ovo
         User user = jwtUserDetailsService.getLoggedInUser();
-        Optional<News> newsMaybe = newsService.findByIdAndCreatedBy(id, user);
+        Optional<News> newsMaybe = newsService.findById(id);
         if(newsMaybe.isEmpty()) {
             throw new NoContentException(getEntityName() + " with the id " + id + " is not found in the database.");
         }
-
         News news = newsMaybe.get();
+        if(news.getCreatedBy() != user) {
+            throw new ForbiddenException("You are not allowed to edit this news");
+        }
         news = setFields(news, newsRequest);
         newsService.update(news);
     }
@@ -80,9 +82,13 @@ public class NewsAPIServiceImpl extends EntityApiServiceImpl<News, NewsRequest, 
     @Override
     public void delete(UUID id) {
         User user = jwtUserDetailsService.getLoggedInUser();
-        Optional<News> newsMaybe = newsService.findByIdAndCreatedBy(id, user);
+        Optional<News> newsMaybe = newsService.findById(id);
         if(newsMaybe.isEmpty()) {
             throw new NoContentException(getEntityName() + " with the id " + id + " is not found in the database.");
+        }
+        News news = newsMaybe.get();
+        if(news.getCreatedBy() != user) {
+            throw new ForbiddenException("You are not allowed to delete this news");
         }
         newsService.delete(id);
     }

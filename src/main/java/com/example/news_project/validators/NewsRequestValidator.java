@@ -14,9 +14,12 @@ import java.util.Optional;
  * Component that validates NewsRequest object - JSON representation of News object
  */
 @Component
-public class NewsRequestValidator implements EntityRequestValidator<NewsRequest> {
-    @Inject
-    private UserRepository userRepository;
+public class NewsRequestValidator extends GenericValidatorImpl<NewsRequest> {
+
+    @Override
+    protected String getObjectName() {
+        return "newsRequest";
+    }
 
     /**
      * @inheritDoc
@@ -24,9 +27,7 @@ public class NewsRequestValidator implements EntityRequestValidator<NewsRequest>
      * @param newsRequest
      */
     @Override
-    public void validate(NewsRequest newsRequest) {
-        Errors errors = new Errors("newsRequest");
-
+    protected Errors validateFields(Errors errors, NewsRequest newsRequest) {
         if (checkInputString(newsRequest.getContent())) {
             errors.rejectValue("content", newsRequest.getContent(),"Empty field");
         }
@@ -34,11 +35,7 @@ public class NewsRequestValidator implements EntityRequestValidator<NewsRequest>
         if (checkInputString(newsRequest.getHeading())) {
             errors.rejectValue("heading", newsRequest.getHeading(),"Empty field");
         }
-
-        //TODO prebaci ove iste stvari u apstrakciju
-        if(errors.getErrorCount() > 0) {
-            throw new ValidationException(errors);
-        }
+        return errors;
     }
 
     private boolean checkInputString(String input) {

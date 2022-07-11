@@ -4,7 +4,8 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class UserFilterParams extends AbstractFilterParams {
     private String usernameContains;
     private String fullNameContains;

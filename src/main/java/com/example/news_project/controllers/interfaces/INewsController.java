@@ -4,14 +4,16 @@ import com.example.news_project.model.NewsFilterParams;
 import com.example.news_project.model.NewsRequest;
 import com.example.news_project.model.NewsResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.UUID;
 
 public interface INewsController extends IEntityController<NewsRequest, NewsResponse, NewsFilterParams> {
 
+    //todo add pathvariable request body itd
     @Override
     @PreAuthorize("hasAnyAuthority('NEWS_READ')")
-    Iterable<NewsResponse> findAll(NewsFilterParams newsFilterParams);
+    Iterable<NewsResponse> findAll(@RequestBody NewsFilterParams newsFilterParams);
 
     @Override
     @PreAuthorize("hasAnyAuthority('NEWS_READ')")

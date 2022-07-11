@@ -30,5 +30,5 @@ public interface NewsService extends GenericService<News> {
      */
     StateMachine<NewsStatus, NewsEvent> deny(UUID newsId);
 
-    Optional<News> findByIdAndCreatedBy(UUID id, User createdBy);
+    Optional<News> findById(UUID id);
 }

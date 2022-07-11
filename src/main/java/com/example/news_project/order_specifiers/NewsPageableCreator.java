@@ -28,7 +28,6 @@ public class NewsPageableCreator {
      * @return pageable object
      * @see Pageable
      */
-    //TODO add not deleted
     public Pageable createPageable(String orderBy, SortOrder sortOrder, int page) {
         if(orderBy == null) {
             return QPageRequest.of(0,pageSize, NewsOrderSpecifier.orderByCreatedAtDesc());
